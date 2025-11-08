@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Taxonomy Rationale
+
+This site organizes 1031 exchange services, locations, and property types to support nationwide replacement property identification. Services are grouped into seven categories: Timelines (45/180 day management), Structures (reverse, improvement, DST), Execution (underwriting, coordination), Tax (boot calculation, state coordination), Reporting (Form 8824 support), Property Paths (identification strategies and asset-specific sourcing), and Education (planning consultation). Locations include 22 Dallas metro areas within 30-45 miles plus a nationwide option, avoiding other top 50 US cities as secondaries. Property types cover ten asset classes from multifamily to land, aligned with IRS like-kind rules. The taxonomy prioritizes investor needs for compliant identification within strict deadlines while supporting both local and multi-state exchanges.
+
 ## Getting Started
 
 First, run the development server:

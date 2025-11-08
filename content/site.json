@@ -1,7 +1,8 @@
 {
-  "company": "1031 Exchange Dallas",
-  "phone": "",
-  "phoneDigits": "",
+  "company": "1031 Exchange of Dallas",
+  "phone": "214-810-1031",
+  "phoneDigits": "2148101031",
+  "email": "hello@1031exchangedallas.com",
   "mainCity": "Dallas",
   "state": "TX",
   "services": [],

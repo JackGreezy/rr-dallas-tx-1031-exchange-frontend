@@ -1,0 +1,14 @@
+# INVENTORY Spotlight Cards — BATCH 01
+Create spotlight cards for your property types. These do not market securities. If DST or TIC is mentioned, include a securities disclaimer.
+
+## Output  TypeScript  write to /data/batches/inventory/batch-01.ts
+export const inventorySpotlight01 = [
+  { type:"multifamily", title:"Multifamily Replacement Properties", copy:"Stabilized and value-add multifamily communities nationwide suitable for 1031 exchanges. We identify properties meeting IRS like-kind requirements within your timeline.", ctaLabel:"Browse Multifamily Inventory", href:"/inventory/multifamily", note:"" },
+  { type:"office", title:"Office Replacement Properties", copy:"Class A, B, and C office buildings and business parks available for exchange. Properties screened for like-kind eligibility and assumable financing options.", ctaLabel:"Browse Office Inventory", href:"/inventory/office", note:"" },
+  { type:"retail", title:"Retail Replacement Properties", copy:"Single tenant net lease and multi tenant retail centers with strong credit tenants. Properties evaluated for income stability and exchange compliance.", ctaLabel:"Browse Retail Inventory", href:"/inventory/retail", note:"" },
+  { type:"industrial", title:"Industrial Replacement Properties", copy:"Warehouse, distribution, and manufacturing facilities suitable for exchanges. Properties assessed for like-kind status and replacement value alignment.", ctaLabel:"Browse Industrial Inventory", href:"/inventory/industrial", note:"" },
+  { type:"land", title:"Land and Development Sites", copy:"Raw land and entitled development parcels available for exchange. Properties reviewed for like-kind eligibility and development potential.", ctaLabel:"Browse Land Inventory", href:"/inventory/land", note:"" },
+  { type:"mixed-use", title:"Mixed Use Replacement Properties", copy:"Combined residential, commercial, and retail developments suitable for exchanges. Properties evaluated for diversified income streams and like-kind compliance.", ctaLabel:"Browse Mixed Use Inventory", href:"/inventory/mixed-use", note:"" },
+  { type:"dst", title:"DST Opportunities", copy:"Delaware Statutory Trust options for fractional replacement property ownership. DST or TIC may be securities. We do not sell securities. We provide introductions to licensed providers only.", ctaLabel:"Learn About DST Options", href:"/inventory/dst", note:"DST or TIC may be securities. We do not sell securities. We provide introductions to licensed providers only." }
+]
+
