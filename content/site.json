@@ -1,0 +1,16 @@
+{
+  "company": "1031 Exchange Dallas",
+  "phone": "",
+  "phoneDigits": "",
+  "mainCity": "Dallas",
+  "state": "TX",
+  "services": [],
+  "servicesNav": [],
+  "locationsNav": [],
+  "extraLinks": [
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ]
+}
