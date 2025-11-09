@@ -37,11 +37,44 @@ export async function generateMetadata({
     notFound();
   }
 
+  const title = `${service.name} | Dallas 1031 Exchange Services`;
+  const description = `${service.shortDescription} We help Dallas investors find replacement properties in all 50 states.`;
+  const url = `${SITE_URL}${SERVICES_PATH}/${service.slug}`;
+
   return {
-    title: `${service.name} | ${COMPANY_NAME}`,
-    description: service.shortDescription,
+    title,
+    description,
+    keywords: [
+      service.name.toLowerCase(),
+      "1031 exchange services",
+      "Dallas 1031 exchange",
+      "replacement property",
+      "like-kind exchange",
+    ],
     alternates: {
-      canonical: `${SITE_URL}${SERVICES_PATH}/${service.slug}`,
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: COMPANY_NAME,
+      images: [
+        {
+          url: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+          width: 1200,
+          height: 630,
+          alt: `${service.name} - ${COMPANY_NAME}`,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${SITE_URL}/1031-exchange-dallas-logo.png`],
     },
   };
 }
@@ -86,23 +119,30 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${SITE_URL}${SERVICES_PATH}/${service.slug}#service`,
     name: service.name,
     serviceType: service.category,
+    description: `${service.shortDescription} We help Dallas investors find replacement properties in all 50 states.`,
     provider: {
-      "@type": "Organization",
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}#organization`,
       name: COMPANY_NAME,
-      areaServed: `${PRIMARY_CITY}, ${PRIMARY_STATE_ABBR}`,
+      url: SITE_URL,
       telephone: COMPANY_PHONE,
+      areaServed: {
+        "@type": "Country",
+        name: "United States",
+      },
     },
-    description: service.shortDescription,
     url: `${SITE_URL.replace(/\/$/, "")}${SERVICES_PATH}/${service.slug}`,
     areaServed: {
-      "@type": "City",
-      name: PRIMARY_CITY,
-      address: {
-        "@type": "PostalAddress",
-        addressRegion: PRIMARY_STATE_ABBR,
-      },
+      "@type": "Country",
+      name: "United States",
+    },
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "USD",
     },
   };
 

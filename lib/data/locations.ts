@@ -120,9 +120,17 @@ const allBatchData = {
 };
 
 // Generate Location objects from batch data
-export const locations: Location[] = Object.entries(allBatchData).map(([slug, data]) =>
-  createLocationFromBatch(slug, data)
-);
+// Append state abbreviation to slugs (except for "nationwide")
+export const locations: Location[] = Object.entries(allBatchData).map(([baseSlug, data]) => {
+  // Use base slug for coordinates lookup and name mapping
+  const location = createLocationFromBatch(baseSlug, data);
+  // Append -tx to slug for URLs (except nationwide)
+  const urlSlug = baseSlug === "nationwide" ? baseSlug : `${baseSlug}-tx`;
+  return {
+    ...location,
+    slug: urlSlug,
+  };
+});
 
 export function getAllLocations(): Location[] {
   return locations;

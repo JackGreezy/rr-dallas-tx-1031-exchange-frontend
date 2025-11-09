@@ -28,8 +28,14 @@ const includesTerm = (baseline: string, term: string) =>
 export const findServiceBySlug = (slug: string) =>
   services.find((service) => service.slug === slug);
 
-export const findLocationBySlug = (slug: string) =>
-  locations.find((location) => location.slug === slug);
+export const findLocationBySlug = (slug: string) => {
+  // Handle both formats: with or without -tx suffix
+  return locations.find((location) => 
+    location.slug === slug || 
+    location.slug === `${slug}-tx` ||
+    location.slug.replace(/-tx$/, "") === slug
+  );
+};
 
 export const findPropertyTypeBySlug = (slug: string) =>
   propertyTypesData.find((propertyType) => propertyType.slug === slug);

@@ -6,7 +6,7 @@ import {
 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
-import { COMPANY_NAME, SITE_URL, COMPANY_PHONE } from "@/lib/constants";
+import { COMPANY_NAME, SITE_URL, COMPANY_PHONE, COMPANY_PHONE_DIGITS, COMPANY_EMAIL, PRIMARY_CITY, PRIMARY_STATE_ABBR } from "@/lib/constants";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import StickyCall from "@/components/StickyCall";
@@ -36,11 +36,68 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: `${COMPANY_NAME} | Qualified Intermediary Network Texas`,
+  title: {
+    default: `${COMPANY_NAME} | Dallas 1031 Exchange Services`,
+    template: `%s | ${COMPANY_NAME}`,
+  },
   description:
-    "Trusted 1031 exchange team supporting Dallas investors with compliant replacement property identification and timeline control.",
+    "Dallas 1031 exchange services. Help Dallas investors find replacement properties in all 50 states. Compliant exchanges, expert coordination, timeline control.",
+  keywords: [
+    "1031 exchange",
+    "Dallas 1031 exchange",
+    "Texas 1031 exchange",
+    "like-kind exchange",
+    "replacement property",
+    "qualified intermediary",
+    "tax deferred exchange",
+    "Dallas real estate",
+    "1031 exchange services",
+    "property exchange",
+  ],
+  authors: [{ name: COMPANY_NAME }],
+  creator: COMPANY_NAME,
+  publisher: COMPANY_NAME,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {
     canonical: SITE_URL,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    siteName: COMPANY_NAME,
+    title: `${COMPANY_NAME} | Dallas 1031 Exchange Services`,
+    description: "Dallas 1031 exchange services. Help Dallas investors find replacement properties in all 50 states. Compliant exchanges, expert coordination.",
+    images: [
+      {
+        url: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: `${COMPANY_NAME} - Dallas 1031 Exchange Services`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${COMPANY_NAME} | Dallas 1031 Exchange Services`,
+    description: "Dallas 1031 exchange services. Help Dallas investors find replacement properties in all 50 states.",
+    images: [`${SITE_URL}/1031-exchange-dallas-logo.png`],
+    creator: "@1031exchangedallas",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   icons: {
     icon: [
@@ -57,6 +114,59 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/favicon/site.webmanifest',
+  verification: {
+    // Add Google Search Console verification if available
+    // google: 'verification-code',
+  },
+};
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${SITE_URL}#organization`,
+  name: COMPANY_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+  image: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+  telephone: `+1-${COMPANY_PHONE_DIGITS.slice(0, 3)}-${COMPANY_PHONE_DIGITS.slice(3, 6)}-${COMPANY_PHONE_DIGITS.slice(6)}`,
+  email: COMPANY_EMAIL,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "9101 Lyndon B Johnson Fwy",
+    addressLocality: PRIMARY_CITY,
+    addressRegion: PRIMARY_STATE_ABBR,
+    postalCode: "75243",
+    addressCountry: "US",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 32.9126,
+    longitude: -96.6389,
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "United States",
+  },
+  serviceArea: {
+    "@type": "Country",
+    name: "United States",
+  },
+  priceRange: "$$",
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    opens: "00:00",
+    closes: "23:59",
+  },
+  sameAs: [],
 };
 
 export default function RootLayout({
@@ -65,7 +175,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-US">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+      </head>
       <body
         className={`${sourceSans.variable} ${ibmPlexSerif.variable} ${inter.variable} min-h-screen bg-paper text-ink antialiased`}
       >

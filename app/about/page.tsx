@@ -10,11 +10,41 @@ import {
 } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: `About ${COMPANY_NAME} | Dallas 1031 Exchange Support`,
+  title: "About Dallas 1031 Exchange | Nationwide Services",
   description:
-    "Learn how 1031 Exchange of Dallas coordinates secure intake, property matching workflows, and third-party Qualified Intermediary relationships for high-net-worth investors.",
+    "Dallas 1031 exchange support. Secure intake, property matching, Qualified Intermediary coordination. We help Dallas investors find replacement properties in all 50 states.",
+  keywords: [
+    "about 1031 exchange",
+    "Dallas 1031 exchange",
+    "1031 exchange support",
+    "qualified intermediary",
+    "replacement property",
+  ],
   alternates: {
     canonical: `${SITE_URL}/about`,
+  },
+  openGraph: {
+    title: "About Dallas 1031 Exchange | Nationwide Services",
+    description:
+      "Dallas 1031 exchange support. Secure intake, property matching, Qualified Intermediary coordination. We help Dallas investors find replacement properties in all 50 states.",
+    url: `${SITE_URL}/about`,
+    siteName: COMPANY_NAME,
+    images: [
+      {
+        url: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "About Dallas 1031 Exchange",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Dallas 1031 Exchange | Nationwide Services",
+    description: "Dallas 1031 exchange support. We help Dallas investors find replacement properties in all 50 states.",
+    images: [`${SITE_URL}/1031-exchange-dallas-logo.png`],
   },
 };
 

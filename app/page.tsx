@@ -12,7 +12,7 @@ import { getAllServices } from "@/lib/data/services";
 import { getAllLocations } from "@/lib/data/locations";
 import { MotionDiv } from "@/components/MotionDiv";
 import ContactFormFields from "@/components/contact/ContactFormFields";
-import { COMPANY_NAME, COMPANY_PHONE, COMPANY_PHONE_DIGITS, SITE_URL, PRIMARY_CITY, PRIMARY_STATE_ABBR } from "@/lib/constants";
+import { COMPANY_NAME, COMPANY_PHONE, COMPANY_PHONE_DIGITS, COMPANY_EMAIL, SITE_URL, PRIMARY_CITY, PRIMARY_STATE_ABBR } from "@/lib/constants";
 import { getPropertyTypeImagePath } from "@/lib/utils/images";
 
 const ibmPlexSerif = IBM_Plex_Serif({
@@ -137,12 +137,12 @@ const PROPERTY_TYPES = [
 ];
 
 const TX_CITIES_SLUGS = [
-  { name: "Dallas", slug: "dallas" },
-  { name: "Fort Worth", slug: "fort-worth" },
-  { name: "Plano", slug: "plano" },
-  { name: "Frisco", slug: "frisco" },
-  { name: "Arlington", slug: "arlington" },
-  { name: "Irving", slug: "irving" },
+  { name: "Dallas", slug: "dallas-tx" },
+  { name: "Fort Worth", slug: "fort-worth-tx" },
+  { name: "Plano", slug: "plano-tx" },
+  { name: "Frisco", slug: "frisco-tx" },
+  { name: "Arlington", slug: "arlington-tx" },
+  { name: "Irving", slug: "irving-tx" },
   { name: "Austin", slug: "austin" },
   { name: "Houston", slug: "houston" },
   { name: "San Antonio", slug: "san-antonio" },
@@ -190,29 +190,41 @@ const trustBadges = [
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": COMPANY_NAME,
-  "url": SITE_URL,
-  "logo": "https://www.1031exchangedallas.com/brand-mark.png",
-  "telephone": `+1-${COMPANY_PHONE_DIGITS.slice(0, 3)}-${COMPANY_PHONE_DIGITS.slice(3, 6)}-${COMPANY_PHONE_DIGITS.slice(6)}`,
-  "contactPoint": [
+  "@type": "FinancialService",
+  "@id": `${SITE_URL}#organization`,
+  name: COMPANY_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+  image: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+  telephone: `+1-${COMPANY_PHONE_DIGITS.slice(0, 3)}-${COMPANY_PHONE_DIGITS.slice(3, 6)}-${COMPANY_PHONE_DIGITS.slice(6)}`,
+  email: COMPANY_EMAIL,
+  contactPoint: [
     {
       "@type": "ContactPoint",
-      "telephone": `+1-${COMPANY_PHONE_DIGITS.slice(0, 3)}-${COMPANY_PHONE_DIGITS.slice(3, 6)}-${COMPANY_PHONE_DIGITS.slice(6)}`,
-      "contactType": "customer service",
-      "areaServed": "US-TX",
-      "availableLanguage": ["English"],
+      telephone: `+1-${COMPANY_PHONE_DIGITS.slice(0, 3)}-${COMPANY_PHONE_DIGITS.slice(3, 6)}-${COMPANY_PHONE_DIGITS.slice(6)}`,
+      contactType: "customer service",
+      areaServed: {
+        "@type": "Country",
+        name: "United States",
+      },
+      availableLanguage: ["English"],
     },
   ],
-  "address": {
+  address: {
     "@type": "PostalAddress",
-    "streetAddress": "9101 Lyndon B Johnson Fwy",
-    "addressLocality": "Dallas",
-    "addressRegion": "TX",
-    "postalCode": "75243",
-    "addressCountry": "US",
+    streetAddress: "9101 Lyndon B Johnson Fwy",
+    addressLocality: PRIMARY_CITY,
+    addressRegion: PRIMARY_STATE_ABBR,
+    postalCode: "75243",
+    addressCountry: "US",
   },
-  "sameAs": [],
+  areaServed: {
+    "@type": "Country",
+    name: "United States",
+  },
+  serviceType: "1031 Exchange Services",
+  description: "1031 exchange services helping Dallas investors find replacement properties in all 50 states",
+  sameAs: [],
 };
 
 const websiteJsonLd = {
@@ -249,25 +261,25 @@ const jsonLdBlocks = [
 const isStaffedOffice = false;
 
 export const metadata: Metadata = {
-  title: `${COMPANY_NAME} | Qualified Intermediary Network Texas`,
+  title: "Dallas 1031 Exchange Services | Nationwide Property Sourcing",
   description:
-    "Trusted 1031 exchange firm helping Dallas investors defer capital gains through compliant exchanges and expert coordination.",
+    "Dallas 1031 exchange services. Help Dallas investors find replacement properties in all 50 states. Compliant exchanges, expert coordination, timeline control.",
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: `${COMPANY_NAME} | Qualified Intermediary Network Texas`,
+    title: "Dallas 1031 Exchange Services | Nationwide Property Sourcing",
     description:
-      "Trusted 1031 exchange firm helping Dallas investors defer capital gains through compliant exchanges and expert coordination.",
+      "Dallas 1031 exchange services. Help Dallas investors find replacement properties in all 50 states. Compliant exchanges, expert coordination.",
     url: SITE_URL,
     siteName: COMPANY_NAME,
     images: [
       {
-        url: "https://www.1031exchangedallas.com/og-lone-star-ledger.jpg",
+        url: `${SITE_URL}/1031-exchange-dallas-logo.png`,
         width: 1200,
         height: 630,
-        alt: `${COMPANY_NAME} interface for a Dallas 1031 exchange advisory firm`,
+        alt: `${COMPANY_NAME} - Dallas 1031 Exchange Services`,
       },
     ],
     locale: "en_US",
@@ -275,10 +287,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${COMPANY_NAME} | Qualified Intermediary Network Texas`,
+    title: "Dallas 1031 Exchange Services | Nationwide Property Sourcing",
     description:
-      "Trusted 1031 exchange firm helping Dallas investors defer capital gains through compliant exchanges and expert coordination.",
-    images: ["https://www.1031exchangedallas.com/og-lone-star-ledger.jpg"],
+      "Dallas 1031 exchange services. Help Dallas investors find replacement properties in all 50 states.",
+    images: [`${SITE_URL}/1031-exchange-dallas-logo.png`],
   },
 };
 

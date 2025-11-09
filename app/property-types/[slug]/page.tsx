@@ -39,11 +39,46 @@ export async function generateMetadata({
     notFound();
   }
 
+  const title = `${propertyType.name} 1031 Exchange Properties | Dallas`;
+  const description = `Explore ${propertyType.name.toLowerCase()} replacement properties for your 1031 exchange. We help Dallas investors find ${propertyType.name.toLowerCase()} properties in all 50 states.`;
+  const url = `${SITE_URL}${PROPERTY_TYPES_PATH}/${propertyType.slug}`;
+  const imagePath = getPropertyTypeImagePath(propertyType.slug);
+  const ogImage = imagePath ? `${SITE_URL}${imagePath}` : `${SITE_URL}/1031-exchange-dallas-logo.png`;
+
   return {
-    title: `${propertyType.name} 1031 Exchange Properties | ${COMPANY_NAME}`,
-    description: `Explore ${propertyType.name.toLowerCase()} replacement properties for your 1031 exchange in ${PRIMARY_CITY}, ${PRIMARY_STATE_ABBR}. Find like-kind properties that meet IRS requirements.`,
+    title,
+    description,
+    keywords: [
+      `${propertyType.name.toLowerCase()} 1031 exchange`,
+      `${propertyType.name.toLowerCase()} replacement property`,
+      "1031 exchange properties",
+      "Dallas 1031 exchange",
+      "like-kind exchange",
+    ],
     alternates: {
-      canonical: `${SITE_URL}${PROPERTY_TYPES_PATH}/${propertyType.slug}`,
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: COMPANY_NAME,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${propertyType.name} 1031 Exchange Properties`,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
     },
   };
 }
@@ -114,8 +149,30 @@ export default async function PropertyTypePage({
 
   const heroImagePath = getPropertyTypeImagePath(propertyType.slug);
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${propertyType.name} 1031 Exchange Properties`,
+    description: `Explore ${propertyType.name.toLowerCase()} replacement properties for your 1031 exchange. We help Dallas investors find ${propertyType.name.toLowerCase()} properties in all 50 states.`,
+    brand: {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}#organization`,
+      name: COMPANY_NAME,
+    },
+    category: "Real Estate Investment",
+    offers: {
+      "@type": "AggregateOffer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "USD",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       <div className="container space-y-16 py-16">
         <nav className="text-xs text-ink/70">
           <ol className="flex flex-wrap items-center gap-2">

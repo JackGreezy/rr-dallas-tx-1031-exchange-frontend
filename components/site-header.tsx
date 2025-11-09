@@ -13,9 +13,9 @@ type MenuKey = "services" | "locations" | "tools" | null;
 
 // Get main location (Dallas) first, then most populous locations
 const getTopLocations = () => {
-  const mainLocation = locationsData.find(loc => loc.slug === 'dallas');
+  const mainLocation = locationsData.find(loc => loc.slug === 'dallas-tx');
   const otherLocations = locationsData
-    .filter(loc => loc.slug !== 'dallas')
+    .filter(loc => loc.slug !== 'dallas-tx')
     .sort((a, b) => {
       // Prioritize cities over neighborhoods/suburbs
       const typeOrder: Record<string, number> = { city: 1, suburb: 2, neighborhood: 3, district: 4, remote: 5 };

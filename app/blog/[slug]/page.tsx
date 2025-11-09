@@ -34,25 +34,45 @@ export async function generateMetadata({
 
   const url = `${SITE_URL.replace(/\/$/, "")}/blog/${article.slug}`;
 
+  const ogImage = article.featuredImage?.asset.url || `${SITE_URL}/1031-exchange-dallas-logo.png`;
+
   return {
-    title: `${article.title} | ${COMPANY_NAME}`,
-    description: article.excerpt,
+    title: article.title,
+    description: article.excerpt || `Learn about 1031 exchanges. ${COMPANY_NAME} helps Dallas investors find replacement properties in all 50 states.`,
+    keywords: [
+      "1031 exchange",
+      "Dallas 1031 exchange",
+      "like-kind exchange",
+      "replacement property",
+      article.title.toLowerCase(),
+    ],
     alternates: {
       canonical: url,
     },
     openGraph: {
       title: article.title,
-      description: article.excerpt,
+      description: article.excerpt || `Learn about 1031 exchanges. ${COMPANY_NAME} helps Dallas investors find replacement properties in all 50 states.`,
       url,
+      siteName: COMPANY_NAME,
       type: "article",
-      images: article.featuredImage?.asset.url
-        ? [
-            {
-              url: article.featuredImage.asset.url,
-              alt: article.featuredImage.alt ?? article.title,
-            },
-          ]
-        : undefined,
+      publishedTime: article.publishedAt,
+      modifiedTime: article.updatedAt || article.publishedAt,
+      authors: [COMPANY_NAME],
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: article.featuredImage?.alt || article.title,
+        },
+      ],
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt || `Learn about 1031 exchanges. ${COMPANY_NAME} helps Dallas investors find replacement properties in all 50 states.`,
+      images: [ogImage],
     },
   };
 }
@@ -88,19 +108,38 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
+    "@id": `${SITE_URL.replace(/\/$/, "")}/blog/${article.slug}#article`,
     headline: article.title,
-    description: article.excerpt,
+    description: article.excerpt || `Learn about 1031 exchanges. ${COMPANY_NAME} helps Dallas investors find replacement properties in all 50 states.`,
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
     author: {
       "@type": "Organization",
+      "@id": `${SITE_URL}#organization`,
       name: COMPANY_NAME,
+      url: SITE_URL,
     },
     publisher: {
       "@type": "Organization",
+      "@id": `${SITE_URL}#organization`,
       name: COMPANY_NAME,
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+      },
     },
-    mainEntityOfPage: `${SITE_URL.replace(/\/$/, "")}/blog/${article.slug}`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL.replace(/\/$/, "")}/blog/${article.slug}`,
+    },
+    image: article.featuredImage?.asset.url ? {
+      "@type": "ImageObject",
+      url: article.featuredImage.asset.url,
+      alt: article.featuredImage.alt || article.title,
+    } : `${SITE_URL}/1031-exchange-dallas-logo.png`,
+    articleSection: "1031 Exchange",
+    keywords: "1031 exchange, Dallas 1031 exchange, like-kind exchange, replacement property",
   };
 
   return (

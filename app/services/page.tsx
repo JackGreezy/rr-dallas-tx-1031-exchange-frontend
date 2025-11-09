@@ -18,17 +18,66 @@ import {
 } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: `1031 Exchange Services | ${COMPANY_NAME}`,
+  title: "Dallas 1031 Exchange Services | Nationwide Property Sourcing",
   description:
-    "Explore Dallas 1031 exchange services covering replacement property sourcing, timelines, financing, and compliance support.",
+    "Dallas 1031 exchange services. Replacement property sourcing, timelines, financing, compliance. We help Dallas investors find properties in all 50 states.",
+  keywords: [
+    "1031 exchange services",
+    "Dallas 1031 exchange",
+    "replacement property sourcing",
+    "1031 exchange coordination",
+    "nationwide property sourcing",
+  ],
   alternates: {
     canonical: `${SITE_URL}${SERVICES_PATH}`,
+  },
+  openGraph: {
+    title: "Dallas 1031 Exchange Services | Nationwide Property Sourcing",
+    description:
+      "Dallas 1031 exchange services. Replacement property sourcing, timelines, financing, compliance. We help Dallas investors find properties in all 50 states.",
+    url: `${SITE_URL}${SERVICES_PATH}`,
+    siteName: COMPANY_NAME,
+    images: [
+      {
+        url: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Dallas 1031 Exchange Services",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dallas 1031 Exchange Services | Nationwide Property Sourcing",
+    description: "Dallas 1031 exchange services. We help Dallas investors find properties in all 50 states.",
+    images: [`${SITE_URL}/1031-exchange-dallas-logo.png`],
   },
 };
 
 export default function ServicesPage() {
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Dallas 1031 Exchange Services",
+    description: "List of 1031 exchange services we provide to help Dallas investors find replacement properties in all 50 states",
+    numberOfItems: services.length,
+    itemListElement: services.map((service, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: service.name,
+      url: `${SITE_URL}${SERVICES_PATH}/${service.slug}`,
+    })),
+  };
+
   return (
-    <div className="container space-y-20 py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      <div className="container space-y-20 py-16">
       <section className="space-y-6">
         <p className="text-sm uppercase tracking-[0.24em] text-primary">
           Services
@@ -80,6 +129,7 @@ export default function ServicesPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
 

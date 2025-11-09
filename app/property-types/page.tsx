@@ -13,16 +13,65 @@ import {
 import { getPropertyTypeImagePath } from "@/lib/utils/images";
 
 export const metadata: Metadata = {
-  title: `1031 Exchange Property Types | ${COMPANY_NAME}`,
-  description: `Explore replacement property types for 1031 exchanges in ${PRIMARY_CITY}, ${PRIMARY_STATE_ABBR}. Find multifamily, office, retail, industrial, and other like-kind properties.`,
+  title: "1031 Exchange Property Types | Dallas Nationwide",
+  description: `Explore replacement property types for 1031 exchanges. Multifamily, office, retail, industrial properties. We help Dallas investors find properties in all 50 states.`,
+  keywords: [
+    "1031 exchange property types",
+    "replacement property types",
+    "multifamily 1031 exchange",
+    "office 1031 exchange",
+    "retail 1031 exchange",
+    "industrial 1031 exchange",
+  ],
   alternates: {
     canonical: `${SITE_URL}${PROPERTY_TYPES_PATH}`,
+  },
+  openGraph: {
+    title: "1031 Exchange Property Types | Dallas Nationwide",
+    description: `Explore replacement property types for 1031 exchanges. We help Dallas investors find properties in all 50 states.`,
+    url: `${SITE_URL}${PROPERTY_TYPES_PATH}`,
+    siteName: COMPANY_NAME,
+    images: [
+      {
+        url: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "1031 Exchange Property Types",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "1031 Exchange Property Types | Dallas Nationwide",
+    description: "Explore replacement property types for 1031 exchanges. We help Dallas investors find properties in all 50 states.",
+    images: [`${SITE_URL}/1031-exchange-dallas-logo.png`],
   },
 };
 
 export default function PropertyTypesPage() {
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "1031 Exchange Property Types",
+    description: "List of property types available for 1031 exchanges. We help Dallas investors find these property types in all 50 states",
+    numberOfItems: propertyTypesData.length,
+    itemListElement: propertyTypesData.map((propertyType, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: propertyType.name,
+      url: `${SITE_URL}${PROPERTY_TYPES_PATH}/${propertyType.slug}`,
+    })),
+  };
+
   return (
-    <div className="container space-y-20 py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      <div className="container space-y-20 py-16">
       <section className="space-y-6">
         <p className="text-sm uppercase tracking-[0.24em] text-primary">
           Property Types
@@ -107,6 +156,7 @@ export default function PropertyTypesPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
 

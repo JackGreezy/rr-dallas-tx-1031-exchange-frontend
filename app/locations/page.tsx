@@ -9,23 +9,73 @@ import {
   PRIMARY_STATE_ABBR,
   CONTACT_PATH,
   LOCATIONS_PATH,
+  SITE_URL,
 } from "@/lib/constants";
 
 const locations = getAllLocations();
 const LOCATION_COUNT = locations.length;
 
 export const metadata: Metadata = {
-  title: `1031 Exchange Locations | ${COMPANY_NAME}`,
+  title: "Dallas 1031 Exchange Locations | Nationwide Property Sourcing",
   description:
-    "Review core Dallas and North Texas submarkets supported by 1031 Exchange of Dallas, including Uptown, Legacy West, Las Colinas, and more.",
+    "Dallas 1031 exchange locations. We help Dallas investors find replacement properties in all 50 states. Serving Uptown, Legacy West, Las Colinas, and nationwide.",
+  keywords: [
+    "Dallas 1031 exchange locations",
+    "1031 exchange locations",
+    "Dallas replacement property",
+    "nationwide 1031 exchange",
+    "all 50 states",
+  ],
   alternates: {
-    canonical: LOCATIONS_PATH,
+    canonical: `${SITE_URL}${LOCATIONS_PATH}`,
+  },
+  openGraph: {
+    title: "Dallas 1031 Exchange Locations | Nationwide Property Sourcing",
+    description:
+      "Dallas 1031 exchange locations. We help Dallas investors find replacement properties in all 50 states.",
+    url: `${SITE_URL}${LOCATIONS_PATH}`,
+    siteName: COMPANY_NAME,
+    images: [
+      {
+        url: `${SITE_URL}/1031-exchange-dallas-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Dallas 1031 Exchange Locations",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dallas 1031 Exchange Locations | Nationwide Property Sourcing",
+    description: "Dallas 1031 exchange locations. We help Dallas investors find replacement properties in all 50 states.",
+    images: [`${SITE_URL}/1031-exchange-dallas-logo.png`],
   },
 };
 
 export default function LocationsPage() {
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Dallas 1031 Exchange Locations",
+    description: "List of locations where we help Dallas investors find 1031 exchange replacement properties",
+    numberOfItems: LOCATION_COUNT,
+    itemListElement: locations.map((location, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: location.name,
+      url: `${SITE_URL}${LOCATIONS_PATH}/${location.slug}`,
+    })),
+  };
+
   return (
-    <div className="container space-y-16 py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      <div className="container space-y-16 py-16">
       <section className="space-y-6">
         <p className="text-sm uppercase tracking-[0.24em] text-primary">
           Locations
@@ -68,6 +118,7 @@ export default function LocationsPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
 
