@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   IBM_Plex_Serif,
   Inter,
@@ -10,6 +11,9 @@ import { LocationSearchGrid } from "@/components/locations/location-search-grid"
 import { getAllServices } from "@/lib/data/services";
 import { getAllLocations } from "@/lib/data/locations";
 import { MotionDiv } from "@/components/MotionDiv";
+import ContactFormFields from "@/components/contact/ContactFormFields";
+import { COMPANY_NAME, COMPANY_PHONE, COMPANY_PHONE_DIGITS, SITE_URL, PRIMARY_CITY, PRIMARY_STATE_ABBR } from "@/lib/constants";
+import { getPropertyTypeImagePath } from "@/lib/utils/images";
 
 const ibmPlexSerif = IBM_Plex_Serif({
   subsets: ["latin"],
@@ -29,9 +33,8 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const PHONE_DISPLAY = "214-810-1031";
-const PHONE_LINK = "tel:+12148101031";
-const SITE_URL = "https://www.1031exchangedallas.com/";
+const PHONE_DISPLAY = COMPANY_PHONE;
+const PHONE_LINK = `tel:+1${COMPANY_PHONE_DIGITS}`;
 
 const TX_TAX_LINKS = [
   {
@@ -188,14 +191,14 @@ const trustBadges = [
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "1031 Exchange of Dallas",
+  "name": COMPANY_NAME,
   "url": SITE_URL,
   "logo": "https://www.1031exchangedallas.com/brand-mark.png",
-  "telephone": "+1-214-810-1031",
+  "telephone": `+1-${COMPANY_PHONE_DIGITS.slice(0, 3)}-${COMPANY_PHONE_DIGITS.slice(3, 6)}-${COMPANY_PHONE_DIGITS.slice(6)}`,
   "contactPoint": [
     {
       "@type": "ContactPoint",
-      "telephone": "+1-214-810-1031",
+      "telephone": `+1-${COMPANY_PHONE_DIGITS.slice(0, 3)}-${COMPANY_PHONE_DIGITS.slice(3, 6)}-${COMPANY_PHONE_DIGITS.slice(6)}`,
       "contactType": "customer service",
       "areaServed": "US-TX",
       "availableLanguage": ["English"],
@@ -203,9 +206,11 @@ const organizationJsonLd = {
   ],
   "address": {
     "@type": "PostalAddress",
-    "addressCountry": "US",
-    "addressRegion": "TX",
+    "streetAddress": "9101 Lyndon B Johnson Fwy",
     "addressLocality": "Dallas",
+    "addressRegion": "TX",
+    "postalCode": "75243",
+    "addressCountry": "US",
   },
   "sameAs": [],
 };
@@ -213,7 +218,7 @@ const organizationJsonLd = {
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "1031 Exchange of Dallas",
+  "name": COMPANY_NAME,
   "url": SITE_URL,
   "potentialAction": {
     "@type": "SearchAction",
@@ -244,7 +249,7 @@ const jsonLdBlocks = [
 const isStaffedOffice = false;
 
 export const metadata: Metadata = {
-  title: "1031 Exchange of Dallas | Qualified Intermediary Network Texas",
+  title: `${COMPANY_NAME} | Qualified Intermediary Network Texas`,
   description:
     "Trusted 1031 exchange firm helping Dallas investors defer capital gains through compliant exchanges and expert coordination.",
   metadataBase: new URL(SITE_URL),
@@ -252,17 +257,17 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "1031 Exchange of Dallas | Qualified Intermediary Network Texas",
+    title: `${COMPANY_NAME} | Qualified Intermediary Network Texas`,
     description:
       "Trusted 1031 exchange firm helping Dallas investors defer capital gains through compliant exchanges and expert coordination.",
     url: SITE_URL,
-    siteName: "1031 Exchange of Dallas",
+    siteName: COMPANY_NAME,
     images: [
       {
         url: "https://www.1031exchangedallas.com/og-lone-star-ledger.jpg",
         width: 1200,
         height: 630,
-        alt: "1031 Exchange of Dallas interface for a Dallas 1031 exchange advisory firm",
+        alt: `${COMPANY_NAME} interface for a Dallas 1031 exchange advisory firm`,
       },
     ],
     locale: "en_US",
@@ -270,7 +275,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "1031 Exchange of Dallas | Qualified Intermediary Network Texas",
+    title: `${COMPANY_NAME} | Qualified Intermediary Network Texas`,
     description:
       "Trusted 1031 exchange firm helping Dallas investors defer capital gains through compliant exchanges and expert coordination.",
     images: ["https://www.1031exchangedallas.com/og-lone-star-ledger.jpg"],
@@ -348,7 +353,7 @@ export default function Home({ searchParams }: HomeProps) {
               <p
                 className={`${inter.className} text-sm uppercase tracking-[0.28em] text-[#153243]`}
               >
-                1031 Exchange of Dallas
+                {COMPANY_NAME}
               </p>
               <h1
                 id="hero-heading"
@@ -436,7 +441,7 @@ export default function Home({ searchParams }: HomeProps) {
               ))}
             </MotionDiv>
           </div>
-          <div className="sr-only">Texas skyline graphic for 1031 Exchange of Dallas site hero.</div>
+          <div className="sr-only">Texas skyline graphic for {COMPANY_NAME} site hero.</div>
         </section>
 
         <section aria-labelledby="why-heading" className="space-y-8">
@@ -445,7 +450,7 @@ export default function Home({ searchParams }: HomeProps) {
               id="why-heading"
               className={`${ibmPlexSerif.className} text-3xl text-[#153243] sm:text-4xl`}
             >
-              Why Texas Investors Choose 1031 Exchange of Dallas.
+              Why Texas Investors Choose {COMPANY_NAME}.
             </h2>
           </MotionDiv>
           <MotionDiv delay={0.2}>
@@ -594,7 +599,7 @@ export default function Home({ searchParams }: HomeProps) {
                 href="/services"
                 className={`${inter.className} text-sm font-semibold text-[#153243] underline underline-offset-4 transition hover:text-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9A441]`}
               >
-                View all services
+                View all {getAllServices().length} services
               </Link>
             </div>
           </MotionDiv>
@@ -622,28 +627,52 @@ export default function Home({ searchParams }: HomeProps) {
           </MotionDiv>
           <MotionDiv delay={0.2}>
             <div className="grid gap-6 md:grid-cols-2">
-              {PROPERTY_TYPES.map((property) => (
-                <article
-                  key={property.slug}
-                  className="flex h-full flex-col gap-3 rounded-2xl border border-[#153243]/10 bg-white p-6 shadow-[0_16px_48px_rgba(21,50,67,0.08)]"
-                >
-                  <h3
-                    className={`${inter.className} text-lg font-semibold text-[#153243]`}
+              {PROPERTY_TYPES.map((property) => {
+                // Map home page slugs to actual property type slugs
+                const slugMap: Record<string, string> = {
+                  'office-medical': 'office',
+                  'retail-mixed-use': 'retail',
+                  'land-development': 'land',
+                };
+                const actualSlug = slugMap[property.slug] || property.slug;
+                const imagePath = getPropertyTypeImagePath(actualSlug);
+                
+                return (
+                  <article
+                    key={property.slug}
+                    className="flex h-full flex-col gap-3 rounded-2xl border border-[#153243]/10 bg-white overflow-hidden shadow-[0_16px_48px_rgba(21,50,67,0.08)]"
                   >
-                    {property.name}
-                  </h3>
-                  <p className="text-base text-[#1E1E1E]/85">
-                    {property.description}
-                  </p>
-                  <Link
-                    href={`/property-types/${property.slug}`}
-                    className={`${inter.className} text-sm font-semibold text-[#153243] underline underline-offset-4 transition hover:text-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9A441]`}
-                    aria-label={`Learn about ${property.name} exchanges`}
-                  >
-                    Learn more
-                  </Link>
-                </article>
-              ))}
+                    {imagePath && (
+                      <div className="relative h-48 w-full">
+                        <Image
+                          src={imagePath}
+                          alt={`${property.name} properties in ${PRIMARY_CITY}, ${PRIMARY_STATE_ABBR}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                      </div>
+                    )}
+                    <div className="flex flex-col flex-1 p-6 gap-3">
+                      <h3
+                        className={`${inter.className} text-lg font-semibold text-[#153243]`}
+                      >
+                        {property.name}
+                      </h3>
+                      <p className="text-base text-[#1E1E1E]/85">
+                        {property.description}
+                      </p>
+                      <Link
+                        href={`/property-types/${property.slug}`}
+                        className={`${inter.className} text-sm font-semibold text-[#153243] underline underline-offset-4 transition hover:text-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9A441]`}
+                        aria-label={`Learn about ${property.name} exchanges`}
+                      >
+                        Learn more
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </MotionDiv>
         </section>
@@ -672,7 +701,7 @@ export default function Home({ searchParams }: HomeProps) {
               href="/locations"
               className={`${inter.className} inline-flex items-center text-sm font-semibold text-[#153243] underline underline-offset-4 transition hover:text-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9A441]`}
             >
-              See locations
+              View all {getAllLocations().length} locations
             </Link>
           </MotionDiv>
         </section>
@@ -691,8 +720,8 @@ export default function Home({ searchParams }: HomeProps) {
           </MotionDiv>
           <MotionDiv delay={0.2}>
             <p className="text-base text-[#1E1E1E]/85">
-              Use our interactive calculators to estimate costs, calculate boot, and validate
-              identification rules for your 1031 exchange.
+              Use our interactive calculators to estimate costs, calculate boot, validate
+              identification rules, estimate depreciation recapture, and calculate replacement property values for your 1031 exchange.
             </p>
           </MotionDiv>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -789,8 +818,71 @@ export default function Home({ searchParams }: HomeProps) {
                 </span>
               </Link>
             </MotionDiv>
+            <MotionDiv delay={0.45}>
+              <Link
+                href="/tools/depreciation-recapture-estimator"
+                className="group flex h-full flex-col rounded-2xl border border-[#153243]/10 bg-white p-6 shadow-[0_20px_56px_rgba(21,50,67,0.08)] transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#153243] text-white">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
+                  </svg>
+                </span>
+                <h3 className={`${ibmPlexSerif.className} mb-2 text-xl font-semibold text-[#153243]`}>
+                  Depreciation Recapture Estimator
+                </h3>
+                <p className="mb-4 flex-1 text-sm text-[#1E1E1E]/85">
+                  Estimate depreciation recapture and capital gains tax on your relinquished property.
+                </p>
+                <span className={`${inter.className} text-sm font-medium text-[#D9A441] transition group-hover:text-[#B68531]`}>
+                  Open estimator →
+                </span>
+              </Link>
+            </MotionDiv>
+            <MotionDiv delay={0.5}>
+              <Link
+                href="/tools/replacement-property-value-calculator"
+                className="group flex h-full flex-col rounded-2xl border border-[#153243]/10 bg-gradient-to-br from-[#16486C] to-[#153243] p-6 text-white shadow-[0_20px_56px_rgba(21,50,67,0.12)] transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#D9A441] text-[#153243]">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <line x1="9" y1="3" x2="9" y2="21" />
+                  </svg>
+                </span>
+                <h3 className={`${ibmPlexSerif.className} mb-2 text-xl font-semibold text-white`}>
+                  Replacement Property Value Calculator
+                </h3>
+                <p className="mb-4 flex-1 text-sm text-white/85">
+                  Calculate the minimum replacement property value needed to defer all gain.
+                </p>
+                <span className={`${inter.className} text-sm font-medium text-[#D9A441] transition group-hover:text-[#B68531]`}>
+                  Open calculator →
+                </span>
+              </Link>
+            </MotionDiv>
           </div>
-          <MotionDiv delay={0.45}>
+          <MotionDiv delay={0.55}>
             <Link
               href="/tools"
               className={`${inter.className} inline-flex items-center text-sm font-semibold text-[#153243] underline underline-offset-4 transition hover:text-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9A441]`}
@@ -845,115 +937,10 @@ export default function Home({ searchParams }: HomeProps) {
               Request 1031 Exchange Assistance.
             </h2>
           </MotionDiv>
-          {statusMessage ? (
-            <MotionDiv delay={0.2}>
-              <div
-                role="status"
-                aria-live="polite"
-                className={`rounded-2xl border p-4 text-sm ${
-                  status === "success"
-                    ? "border-[#D9A441]/50 bg-[#D9A441]/15 text-[#153243]"
-                    : "border-[#942600]/20 bg-[#942600]/10 text-[#942600]"
-                }`}
-              >
-                {statusMessage}
-              </div>
-            </MotionDiv>
-          ) : null}
           <MotionDiv delay={0.25}>
-            <form
-              action="/api/lead"
-              method="post"
-              className="grid gap-6 rounded-3xl border border-[#153243]/15 bg-white p-8 shadow-[0_24px_64px_rgba(21,50,67,0.1)]"
-              aria-describedby="form-disclaimer"
-              noValidate
-            >
-              <div className="grid gap-6 md:grid-cols-2">
-                <FormField
-                  label="Name"
-                  id="name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                />
-                <FormField
-                  label="Email"
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                />
-                <FormField
-                  label="Phone"
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  pattern="[\d\s\-\(\)\+]{7,}"
-                  required
-                />
-                <FormField
-                  label="City"
-                  id="city"
-                  name="city"
-                  type="text"
-                  autoComplete="address-level2"
-                  required
-                />
-              </div>
-              <FormField
-                label="Property Being Sold"
-                id="property"
-                name="property"
-                type="text"
-                autoComplete="off"
-                required
-              />
-              <FormField
-                label="Estimated Close Date"
-                id="closeDate"
-                name="closeDate"
-                type="date"
-                required
-              />
-              <div className="space-y-2">
-                <label
-                  htmlFor="message"
-                  className={`${inter.className} text-sm font-medium uppercase tracking-[0.24em] text-[#153243]`}
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  required
-                  aria-required="true"
-                  aria-describedby="message-help"
-                  className="w-full rounded-2xl border border-[#153243]/25 bg-white px-4 py-3 text-base text-[#1E1E1E] shadow-[inset_0_1px_1px_rgba(21,50,67,0.08)] transition focus:border-[#D9A441] focus:outline-none focus:ring-2 focus:ring-[#D9A441] invalid:border-[#942600]"
-                />
-                <p id="message-help" className="text-sm text-[#1E1E1E]/70">
-                  Share transaction details, deadlines, and advisor contacts for a
-                  faster response.
-                </p>
-              </div>
-              <button
-                type="submit"
-                className={`${inter.className} inline-flex items-center justify-center rounded-full bg-[#153243] px-8 py-3 text-base font-semibold text-white transition hover:bg-[#112533] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9A441]`}
-              >
-                Submit request
-              </button>
-              <p
-                id="form-disclaimer"
-                className="text-xs text-[#1E1E1E]/70"
-              >
-                Educational content only. Not tax or legal advice.
-              </p>
-            </form>
+            <ContactFormFields showHeading={false} />
           </MotionDiv>
-          <div className="sr-only">Contact form for 1031 Exchange of Dallas.</div>
+          <div className="sr-only">Contact form for {COMPANY_NAME}.</div>
         </section>
 
         <footer
@@ -966,10 +953,10 @@ export default function Home({ searchParams }: HomeProps) {
                 id="footer-heading"
                 className={`${ibmPlexSerif.className} text-2xl text-white`}
               >
-                1031 Exchange of Dallas Confidence.
+                {COMPANY_NAME} Confidence.
               </h2>
               <p className="text-sm text-white/80">
-                1031 Exchange of Dallas guides investors through complex exchanges with
+                {COMPANY_NAME} guides investors through complex exchanges with
                 disciplined process control, statewide expertise, and trusted
                 professional partners.
               </p>
@@ -1090,7 +1077,7 @@ export default function Home({ searchParams }: HomeProps) {
               ))}
             </p>
             <p>
-              © 2025 1031 Exchange of Dallas. All rights reserved.
+              © 2025 {COMPANY_NAME}. All rights reserved.
             </p>
           </div>
         </footer>
@@ -1106,47 +1093,3 @@ export default function Home({ searchParams }: HomeProps) {
   );
 }
 
-type FormFieldProps = {
-  label: string;
-  id: string;
-  name: string;
-  type: string;
-  autoComplete?: string;
-  pattern?: string;
-  required?: boolean;
-};
-
-function FormField({
-  label,
-  id,
-  name,
-  type,
-  autoComplete,
-  pattern,
-  required,
-}: FormFieldProps) {
-  return (
-    <div className="space-y-2">
-      <label
-        htmlFor={id}
-        className={`${inter.className} text-sm font-medium uppercase tracking-[0.24em] text-[#153243]`}
-      >
-        {label}
-      </label>
-      <input
-        id={id}
-        name={name}
-        type={type}
-        autoComplete={autoComplete}
-        pattern={pattern}
-        required={required}
-        aria-required={required ? "true" : "false"}
-        aria-describedby={`${id}-help`}
-        className="w-full rounded-2xl border border-[#153243]/25 bg-white px-4 py-3 text-base text-[#1E1E1E] shadow-[inset_0_1px_1px_rgba(21,50,67,0.08)] transition focus:border-[#D9A441] focus:outline-none focus:ring-2 focus:ring-[#D9A441] invalid:border-[#942600]"
-      />
-      <p id={`${id}-help`} className="text-sm text-[#1E1E1E]/70">
-        {label} is required.
-      </p>
-    </div>
-  );
-}

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getAllLocations } from "@/lib/data/locations";
 import { getAllServices } from "@/lib/data/services";
 import { findLocationBySlug } from "@/lib/utils/search";
+import { getLocationImagePath } from "@/lib/utils/images";
 
 const locations = getAllLocations();
+const locationsCount = locations.length;
 const services = getAllServices();
 import {
   COMPANY_NAME,
@@ -78,6 +81,8 @@ export default async function LocationPage({ params }: LocationPageProps) {
     ],
   };
 
+  const heroImagePath = getLocationImagePath(location.slug);
+
   return (
     <>
       <div className="container space-y-16 py-16">
@@ -98,6 +103,18 @@ export default async function LocationPage({ params }: LocationPageProps) {
             <li className="font-medium text-ink">{location.name}</li>
           </ol>
         </nav>
+        {heroImagePath && (
+          <div className="relative h-[400px] w-full overflow-hidden rounded-3xl">
+            <Image
+              src={heroImagePath}
+              alt={`${location.name}, ${PRIMARY_STATE_ABBR}`}
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
+            />
+          </div>
+        )}
         <header className="space-y-6">
           <p className="text-sm uppercase tracking-[0.24em] text-primary">
             {PRIMARY_CITY} Metro
@@ -211,7 +228,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                 href={LOCATIONS_PATH}
                 className="inline-flex items-center rounded-full border border-outline/30 px-5 py-3 text-sm font-medium text-ink transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
-                View all locations
+                View all {locationsCount} locations
               </Link>
             </div>
           </div>

@@ -73,7 +73,8 @@ const getAllProjectTypes = (customType?: string): string[] => {
   if (customType && customType.trim()) {
     types.add(customType.trim());
   }
-  return Array.from(types).sort();
+  // Sort alphabetically
+  return Array.from(types).sort((a, b) => a.localeCompare(b));
 };
 
 type FormData = {
@@ -389,7 +390,11 @@ function ContactFormFieldsContent({ onSuccess, showHeading = false, className = 
               type="tel"
               id="phone"
               value={formData.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
+              onChange={(e) => {
+                // Only allow digits, spaces, hyphens, parentheses, and plus sign
+                const value = e.target.value.replace(/[^\d\s\-\(\)\+]/g, '');
+                handleInputChange('phone', value);
+              }}
               className="w-full px-4 py-3 bg-white border border-outline/30 rounded-2xl text-heading placeholder:text-ink/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               required
             />

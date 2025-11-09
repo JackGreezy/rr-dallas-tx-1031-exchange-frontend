@@ -3,6 +3,7 @@ import { apiRateLimiter } from '@/lib/rate-limit'
 import { verifyTurnstile } from '@/lib/turnstile'
 import { getBrand } from '@/lib/brand'
 import { sendCustomerConfirmation, sendInternalNotifications } from '@/lib/email/sendgrid'
+import { COMPANY_NAME } from '@/lib/constants'
 
 export const runtime = 'nodejs'
 
@@ -49,7 +50,7 @@ export async function POST(request: NextRequest) {
       projectType: getProjectTypeFromSite('rr-dallas-tx-1031-exchange'),
       contractorEmail: process.env.CONTRACTOR_EMAIL || '',
       timestamp: new Date().toISOString(),
-      source: process.env.NEXT_PUBLIC_SOURCE || '1031 Exchange of Dallas Website',
+      source: process.env.NEXT_PUBLIC_SOURCE || `${COMPANY_NAME} Website`,
       submitted_at: new Date().toISOString(),
       website_url: siteUrl,
       // helpful tracing for Zapier

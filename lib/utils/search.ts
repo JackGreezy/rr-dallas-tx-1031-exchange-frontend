@@ -1,5 +1,6 @@
 import { services } from "@/lib/data/services";
 import { locations } from "@/lib/data/locations";
+import { propertyTypesData } from "@/data/property-types";
 
 type Searchable = {
   slug: string;
@@ -29,6 +30,9 @@ export const findServiceBySlug = (slug: string) =>
 
 export const findLocationBySlug = (slug: string) =>
   locations.find((location) => location.slug === slug);
+
+export const findPropertyTypeBySlug = (slug: string) =>
+  propertyTypesData.find((propertyType) => propertyType.slug === slug);
 
 export const searchServices = (query: string) => {
   const normalized = normalize(query);

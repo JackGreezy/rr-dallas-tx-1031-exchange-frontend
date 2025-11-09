@@ -1,28 +1,72 @@
 'use client';
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { COMPANY_PHONE, CONTACT_PATH, SERVICES_PATH, LOCATIONS_PATH, TOOLS_PATH } from "@/lib/constants";
+import { COMPANY_NAME, COMPANY_PHONE, CONTACT_PATH, SERVICES_PATH, LOCATIONS_PATH, TOOLS_PATH, ABOUT_PATH, BLOG_PATH } from "@/lib/constants";
 import { services } from "@/lib/data/services";
 import { locations } from "@/lib/data/locations";
+import { locationsData } from "@/data/locations";
 
 type MenuKey = "services" | "locations" | "tools" | null;
 
-const serviceLinks = services.slice(0, 8).map((service) => ({
+// Get main location (Dallas) first, then most populous locations
+const getTopLocations = () => {
+  const mainLocation = locationsData.find(loc => loc.slug === 'dallas');
+  const otherLocations = locationsData
+    .filter(loc => loc.slug !== 'dallas')
+    .sort((a, b) => {
+      // Prioritize cities over neighborhoods/suburbs
+      const typeOrder: Record<string, number> = { city: 1, suburb: 2, neighborhood: 3, district: 4, remote: 5 };
+      return (typeOrder[a.type] || 99) - (typeOrder[b.type] || 99);
+    })
+    .slice(0, 7); // Get top 7 to make 8 total with main location
+  
+  const topLocations = mainLocation 
+    ? [mainLocation, ...otherLocations]
+    : otherLocations.slice(0, 8);
+  
+  return topLocations.map((location) => ({
+    href: `${LOCATIONS_PATH}/${location.slug}`,
+    label: location.name,
+  }));
+};
+
+// Get main services (mostly identifying properties)
+const getTopServices = () => {
+  const identificationServices = services
+    .filter(service => 
+      service.slug.includes('identification') || 
+      service.slug.includes('replacement') ||
+      service.slug.includes('sourcing')
+    )
+    .slice(0, 7);
+  
+  // If we don't have enough identification services, add others
+  if (identificationServices.length < 7) {
+    const otherServices = services
+      .filter(service => !identificationServices.includes(service))
+      .slice(0, 7 - identificationServices.length);
+    return [...identificationServices, ...otherServices].slice(0, 7);
+  }
+  
+  return identificationServices;
+};
+
+const serviceLinks = getTopServices().map((service) => ({
   href: `${SERVICES_PATH}/${service.slug}`,
   label: service.name,
 }));
 
-const locationLinks = locations.slice(0, 8).map((location) => ({
-  href: `${LOCATIONS_PATH}/${location.slug}`,
-  label: location.name,
-}));
+const locationLinks = getTopLocations();
 
 const toolLinks = [
   { href: `${TOOLS_PATH}/boot-calculator`, label: "Boot Calculator" },
   { href: `${TOOLS_PATH}/exchange-cost-estimator`, label: "Exchange Cost Estimator" },
   { href: `${TOOLS_PATH}/identification-rules-checker`, label: "Identification Rules Checker" },
+  { href: `${TOOLS_PATH}/depreciation-recapture-estimator`, label: "Depreciation Recapture Estimator" },
+  { href: `${TOOLS_PATH}/replacement-property-value-calculator`, label: "Replacement Property Value Calculator" },
 ];
 
 const menuConfig: Record<Exclude<MenuKey, null>, { label: string; links: { href: string; label: string }[] }> =
@@ -30,14 +74,14 @@ const menuConfig: Record<Exclude<MenuKey, null>, { label: string; links: { href:
     services: {
       label: "Services",
       links: [
-        { href: SERVICES_PATH, label: "View All Services" },
+        { href: SERVICES_PATH, label: `View All ${services.length} Services` },
         ...serviceLinks,
       ],
     },
     locations: {
       label: "Locations",
       links: [
-        { href: LOCATIONS_PATH, label: "View All Locations" },
+        { href: LOCATIONS_PATH, label: `View All ${locationsData.length} Locations` },
         ...locationLinks,
       ],
     },
@@ -98,7 +142,8 @@ export function SiteHeader() {
     if (hoverTimeout.current) {
       clearTimeout(hoverTimeout.current);
     }
-    hoverTimeout.current = setTimeout(() => setActiveMenu(null), 120);
+    // Increased timeout to allow users to move mouse to dropdown
+    hoverTimeout.current = setTimeout(() => setActiveMenu(null), 300);
   };
 
   const menuItems = useMemo(() => menuConfig, []);
@@ -106,15 +151,22 @@ export function SiteHeader() {
   return (
     <header
       ref={containerRef}
-      className="sticky top-0 z-40 border-b border-outline/20 bg-paper/90 backdrop-blur"
+      className="sticky top-0 z-[9999] isolate border-b border-outline/20 bg-paper backdrop-blur-md"
     >
       <div className="container flex items-center justify-between py-4">
         <div className="flex items-center gap-8">
           <Link
             href="/"
-            className="text-lg font-semibold text-heading transition-colors hover:text-primary"
+            className="flex items-center transition-opacity hover:opacity-80"
           >
-            1031 Exchange of Dallas
+            <Image
+              src="/1031-exchange-dallas-logo.png"
+              alt={COMPANY_NAME}
+              width={200}
+              height={60}
+              className="h-auto w-auto"
+              priority
+            />
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
             {Object.entries(menuItems).map(([key, menu]) => (
@@ -139,7 +191,7 @@ export function SiteHeader() {
                 <div
                   id={`header-menu-${key}`}
                   role="menu"
-                  className={`absolute left-0 mt-2 w-64 rounded-2xl border border-outline/15 bg-white p-3 shadow-elevation transition-opacity ${
+                  className={`absolute left-0 mt-2 w-64 rounded-2xl border border-outline/15 bg-white p-3 shadow-elevation transition-opacity z-[10000] ${
                     activeMenu === key ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
                   }`}
                 >
@@ -160,18 +212,18 @@ export function SiteHeader() {
               </div>
             ))}
             <Link
-              href={TOOLS_PATH}
+              href={ABOUT_PATH}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                isActive(TOOLS_PATH)
+                isActive(ABOUT_PATH)
                   ? "bg-primary text-primary-fg"
                   : "text-ink hover:text-primary"
               }`}
             >
-              Tools
+              About
             </Link>
             <Link
               href={BLOG_PATH}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+              className={`mr-4 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                 isActive(BLOG_PATH)
                   ? "bg-primary text-primary-fg"
                   : "text-ink hover:text-primary"
@@ -191,7 +243,7 @@ export function SiteHeader() {
           </button>
           <a
             href={createPhoneHref(COMPANY_PHONE)}
-            className="inline-flex rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-fg transition-colors hover:bg-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-fg transition-colors hover:bg-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Call {COMPANY_PHONE}
           </a>
@@ -218,6 +270,12 @@ export function SiteHeader() {
             Tools
           </Link>
           <Link
+            href={ABOUT_PATH}
+            className="rounded-full border border-outline/30 px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-primary hover:text-primary"
+          >
+            About
+          </Link>
+          <Link
             href={CONTACT_PATH}
             className="rounded-full border border-outline/30 px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-primary hover:text-primary"
           >
@@ -229,5 +287,4 @@ export function SiteHeader() {
   );
 }
 
-const BLOG_PATH = "/blog";
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllLocations } from "@/lib/data/locations";
+import { getAllServices } from "@/lib/data/services";
 import { LocationSearchGrid } from "@/components/locations/location-search-grid";
 import {
   COMPANY_NAME,
@@ -61,7 +62,7 @@ export default function LocationsPage() {
               href="/services"
               className="inline-flex items-center rounded-full border border-outline/30 px-5 py-3 text-sm font-medium text-ink transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
-              Explore services
+              View all {getAllServices().length} services
             </Link>
           </div>
         </div>

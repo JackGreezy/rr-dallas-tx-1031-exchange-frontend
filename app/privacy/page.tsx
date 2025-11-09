@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/breadcrumbs";
-import { COMPANY_NAME, SITE_URL, PRIMARY_CITY, PRIMARY_STATE_ABBR } from "@/lib/constants";
+import { COMPANY_NAME, COMPANY_EMAIL, SITE_URL, PRIMARY_CITY, PRIMARY_STATE_ABBR } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: `Privacy Policy | ${COMPANY_NAME}`,
@@ -126,7 +126,7 @@ export default function PrivacyPage() {
           <p>
             <strong>{COMPANY_NAME}</strong><br />
             Serving investors across {PRIMARY_CITY}, {PRIMARY_STATE_ABBR}<br />
-            Email: <Link href="mailto:hello@1031exchangedallas.com" className="text-primary underline underline-offset-4 hover:text-[#B68531]">hello@1031exchangedallas.com</Link>
+            Email: <Link href={`mailto:${COMPANY_EMAIL}`} className="text-primary underline underline-offset-4 hover:text-[#B68531]">{COMPANY_EMAIL}</Link>
           </p>
         </section>
       </div>

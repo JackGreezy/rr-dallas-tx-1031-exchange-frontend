@@ -6,6 +6,7 @@ import { findServiceBySlug } from "@/lib/utils/search";
 import { RelatedServices } from "@/components/services/related-services";
 
 const services = getAllServices();
+const servicesCount = services.length;
 import {
   COMPANY_NAME,
   COMPANY_PHONE,
@@ -209,10 +210,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 Start with this service
               </Link>
               <Link
-                href={CONTACT_PATH}
+                href={SERVICES_PATH}
                 className="inline-flex items-center rounded-full border border-outline/30 px-5 py-3 text-sm font-medium text-ink transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
-                Contact our team
+                View all {servicesCount} services
               </Link>
             </div>
           </div>

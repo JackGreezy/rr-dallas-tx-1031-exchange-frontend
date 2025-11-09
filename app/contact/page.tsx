@@ -129,14 +129,14 @@ function ContactPageContent() {
 
               <div className="h-96 w-full overflow-hidden rounded-2xl border border-[#153243]/15 bg-[#153243]/5">
                 <iframe
-                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6d_s6H4ZO0QhJ0&q=${encodeURIComponent(`${PRIMARY_CITY},${PRIMARY_STATE_ABBR}`)}`}
+                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6d_s6H4ZO0QhJ0&q=${encodeURIComponent("9101 Lyndon B Johnson Fwy, Dallas, TX 75243")}`}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title={`Map showing ${PRIMARY_CITY}, ${PRIMARY_STATE_ABBR}`}
+                  title="Map showing 1031 Exchange Dallas location"
                 />
               </div>
 

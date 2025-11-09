@@ -5,14 +5,16 @@ import {
   CalculatorIcon,
   CurrencyDollarIcon,
   CheckCircleIcon,
+  ChartBarIcon,
+  BuildingOfficeIcon,
 } from "@heroicons/react/24/outline";
 import { SITE_URL, PRIMARY_CITY, PRIMARY_STATE_ABBR } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "1031 Exchange Tools | 1031 Exchange of Dallas",
   description:
-    "Interactive calculators and tools for 1031 exchanges in Dallas, TX. Calculate boot, estimate costs, and validate identification rules.",
-  keywords: "1031 exchange tools, boot calculator, exchange cost estimator, identification rules checker, Dallas, TX",
+    "Interactive calculators and tools for 1031 exchanges in Dallas, TX. Calculate boot, estimate costs, validate identification rules, estimate depreciation recapture, and calculate replacement property values.",
+  keywords: "1031 exchange tools, boot calculator, exchange cost estimator, identification rules checker, depreciation recapture, replacement property calculator, Dallas, TX",
   openGraph: {
     title: "1031 Exchange Tools | 1031 Exchange of Dallas",
     description: "Interactive calculators and tools for 1031 exchanges in Dallas, TX.",
@@ -45,6 +47,20 @@ const tools = [
     description:
       "Validate your identification against the three property, 200 percent, or 95 percent rules.",
     icon: CheckCircleIcon,
+  },
+  {
+    slug: "depreciation-recapture-estimator",
+    name: "Depreciation Recapture Estimator",
+    description:
+      "Estimate depreciation recapture and capital gains tax on your relinquished property before exchanging.",
+    icon: ChartBarIcon,
+  },
+  {
+    slug: "replacement-property-value-calculator",
+    name: "Replacement Property Value Calculator",
+    description:
+      "Calculate the minimum replacement property value needed to defer all gain in your 1031 exchange.",
+    icon: BuildingOfficeIcon,
   },
 ];
 
@@ -115,6 +131,33 @@ export default function ToolsPage() {
             fees and title insurance premiums still apply.
           </p>
         </div>
+
+        <section className="mt-16 rounded-3xl border border-outline/15 bg-white p-8 shadow-[0_20px_60px_rgba(21,50,67,0.12)]">
+          <div className="flex flex-col gap-3 text-center md:flex-row md:items-center md:justify-between md:text-left">
+            <div>
+              <h2 className="text-2xl font-semibold text-heading">
+                Ready to start your 1031 exchange?
+              </h2>
+              <p className="text-sm text-ink/80">
+                Tell us about your exchange goals and timeline. We'll help you identify replacement properties and coordinate with qualified intermediaries in {PRIMARY_CITY}, {PRIMARY_STATE_ABBR}.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 md:justify-end">
+              <Link
+                href="/contact"
+                className="inline-flex items-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-fg transition hover:bg-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                Contact exchange desk
+              </Link>
+              <Link
+                href="/services"
+                className="inline-flex items-center rounded-full border border-outline/30 px-5 py-3 text-sm font-medium text-ink transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                Explore services
+              </Link>
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );

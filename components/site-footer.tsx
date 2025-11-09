@@ -21,9 +21,11 @@ const toolLinks = [
   { href: `${TOOLS_PATH}/boot-calculator`, label: "Boot Calculator" },
   { href: `${TOOLS_PATH}/exchange-cost-estimator`, label: "Exchange Cost Estimator" },
   { href: `${TOOLS_PATH}/identification-rules-checker`, label: "Identification Rules Checker" },
+  { href: `${TOOLS_PATH}/depreciation-recapture-estimator`, label: "Depreciation Recapture Estimator" },
+  { href: `${TOOLS_PATH}/replacement-property-value-calculator`, label: "Replacement Property Value Calculator" },
 ];
 
-const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${PRIMARY_CITY}, ${PRIMARY_STATE_ABBR}`)}&output=embed`;
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent("9101 Lyndon B Johnson Fwy, Dallas, TX 75243")}&output=embed`;
 
 export function SiteFooter() {
   return (
@@ -31,13 +33,13 @@ export function SiteFooter() {
       <div className="container grid gap-12 py-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div className="space-y-4">
           <p className="text-sm uppercase tracking-[0.22em] text-primary">
-            1031 Exchange of Dallas
+            {COMPANY_NAME}
           </p>
           <h2 className="text-2xl font-semibold text-white">
             {COMPANY_NAME}
           </h2>
           <p className="max-w-lg text-sm text-secondary-fg/80">
-            1031 Exchange of Dallas guides investors through compliant replacement
+            {COMPANY_NAME} guides investors through compliant replacement
             property identification across {PRIMARY_CITY}, {PRIMARY_STATE_ABBR}.
             Our team aligns advisors, lenders, and qualified intermediaries so
             every deadline stays in control.
@@ -72,7 +74,7 @@ export function SiteFooter() {
           <div className="aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 shadow-lg shadow-black/20">
             <iframe
               src={mapSrc}
-              title={`Map of ${PRIMARY_CITY}, ${PRIMARY_STATE_ABBR}`}
+              title="Map of 1031 Exchange Dallas location"
               className="h-full w-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

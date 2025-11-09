@@ -8,7 +8,7 @@ export default function StickyCall({ phone }: StickyCallProps) {
   const telHref = `tel:${phone.replace(/\D/g, "")}`;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-3">
+    <div className="fixed bottom-4 right-4 z-[9998] flex flex-col gap-3">
       <a
         href={CONTACT_PATH}
         className="hidden min-w-[200px] items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-fg shadow-lg shadow-black/20 transition hover:bg-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:inline-flex"
