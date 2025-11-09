@@ -47,7 +47,7 @@ export default function LocationsPage() {
               Not seeing your target market?
             </h2>
             <p className="text-sm text-ink/80">
-              We support exchanges statewide. Share the city or district you are
+              We help Dallas investors find 1031 exchange properties in all 50 states. Share the city or district you are
               pursuing and we will build a search brief within one business day.
             </p>
           </div>

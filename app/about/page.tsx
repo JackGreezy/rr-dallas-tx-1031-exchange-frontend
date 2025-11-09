@@ -27,7 +27,7 @@ const differentiators = [
   {
     title: "Exchange-aligned property matching",
     description:
-      "We source and score replacement assets based on timeline certainty, like-kind eligibility, and underwriting benchmarks specific to Dallas, TX.",
+      "We source and score replacement assets nationwide based on timeline certainty, like-kind eligibility, and underwriting benchmarks. We help Dallas investors find properties in all 50 states.",
   },
   {
     title: "Qualified Intermediary coordination",
@@ -57,9 +57,8 @@ export default function AboutPage() {
           Purpose-built support for Dallas 1031 exchanges
         </h1>
         <p className="max-w-3xl text-lg text-ink/85">
-          {COMPANY_NAME} operates as a secure project desk for investors,
-          developers, and advisors completing tax-deferred exchanges across{" "}
-          {PRIMARY_CITY}, {PRIMARY_STATE_ABBR}. We choreograph every step between
+          {COMPANY_NAME} operates as a secure project desk for Dallas investors,
+          developers, and advisors completing tax-deferred exchanges. We help Dallas investors find replacement properties in all 50 states. We choreograph every step between
           property sale, replacement sourcing, and closing so deadlines stay on
           track and documentation remains audit ready.
         </p>

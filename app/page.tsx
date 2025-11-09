@@ -457,8 +457,8 @@ export default function Home({ searchParams }: HomeProps) {
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 {
-                  title: "Statewide Expertise",
-                  description: "Deep experience across Texas markets.",
+                  title: "Nationwide Property Sourcing",
+                  description: "We help Dallas investors find replacement properties in all 50 states.",
                 },
                 {
                   title: "IRS-Compliant Process",
@@ -683,14 +683,12 @@ export default function Home({ searchParams }: HomeProps) {
               id="coverage-heading"
               className={`${ibmPlexSerif.className} text-3xl text-[#153243] sm:text-4xl`}
             >
-              Serving Dallas and All of Texas.
+              Serving Dallas Investors Nationwide.
             </h2>
           </MotionDiv>
           <MotionDiv delay={0.2}>
             <p className="text-base text-[#1E1E1E]/85">
-              We provide 1031 exchange support for real estate transactions across
-              Dallas, Fort Worth, Plano, Frisco, Arlington, and throughout Texas. Our
-              team manages both local and multi-state exchanges with precision.
+              We help Dallas investors find 1031 exchange replacement properties in all 50 states. While we're based in Dallas and serve the North Texas metro, our team sources and coordinates exchanges nationwide with precision.
             </p>
           </MotionDiv>
           <MotionDiv delay={0.3}>
@@ -956,8 +954,8 @@ export default function Home({ searchParams }: HomeProps) {
                 {COMPANY_NAME} Confidence.
               </h2>
               <p className="text-sm text-white/80">
-                {COMPANY_NAME} guides investors through complex exchanges with
-                disciplined process control, statewide expertise, and trusted
+                {COMPANY_NAME} guides Dallas investors through complex exchanges with
+                disciplined process control, nationwide property sourcing across all 50 states, and trusted
                 professional partners.
               </p>
               <div className="space-y-1 text-sm text-white/90">

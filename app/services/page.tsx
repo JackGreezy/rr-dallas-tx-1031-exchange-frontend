@@ -39,7 +39,7 @@ export default function ServicesPage() {
         <p className="max-w-3xl text-lg text-ink/85">
           Redeploy capital with confidence. Our {services.length} service tracks
           cover replacement property discovery, underwriting, financing, and
-          compliance across {PRIMARY_CITY}, {PRIMARY_STATE_ABBR}. Filter by
+          compliance. We help Dallas investors find replacement properties in all 50 states. Filter by
           timeline or asset type to find the program that fits your exchange.
         </p>
       </section>

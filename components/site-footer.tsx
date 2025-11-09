@@ -39,8 +39,8 @@ export function SiteFooter() {
             {COMPANY_NAME}
           </h2>
           <p className="max-w-lg text-sm text-secondary-fg/80">
-            {COMPANY_NAME} guides investors through compliant replacement
-            property identification across {PRIMARY_CITY}, {PRIMARY_STATE_ABBR}.
+            {COMPANY_NAME} guides Dallas investors through compliant replacement
+            property identification. We help Dallas investors find replacement properties in all 50 states.
             Our team aligns advisors, lenders, and qualified intermediaries so
             every deadline stays in control.
           </p>
@@ -68,7 +68,7 @@ export function SiteFooter() {
               client coverage
             </p>
             <p>
-              Serving investors across {PRIMARY_CITY}, {PRIMARY_STATE_ABBR}.
+              Serving Dallas investors nationwide. We help find replacement properties in all 50 states.
             </p>
           </div>
           <div className="aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 shadow-lg shadow-black/20">
@@ -147,7 +147,7 @@ export function SiteFooter() {
       <div className="border-t border-white/10 bg-secondary/90">
         <div className="container flex flex-col items-start justify-between gap-3 py-6 text-xs text-secondary-fg/70 md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.</p>
-          <p>Compliant exchange support across {PRIMARY_CITY}, {PRIMARY_STATE_ABBR}.</p>
+          <p>Nationwide 1031 exchange support for Dallas investors. We help find replacement properties in all 50 states.</p>
         </div>
       </div>
     </footer>

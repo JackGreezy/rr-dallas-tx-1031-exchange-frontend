@@ -94,10 +94,10 @@ export function LocationSearchGrid({
             return (
               <article
                 key={location.slug}
-                className="flex h-full flex-col justify-between gap-4 rounded-3xl border border-outline/15 bg-white overflow-hidden shadow-[0_20px_56px_rgba(21,50,67,0.08)] transition hover:-translate-y-1 hover:shadow-[0_32px_72px_rgba(21,50,67,0.12)]"
+                className="flex h-full flex-col rounded-3xl border border-outline/15 bg-white overflow-hidden shadow-[0_20px_56px_rgba(21,50,67,0.08)] transition hover:-translate-y-1 hover:shadow-[0_32px_72px_rgba(21,50,67,0.12)]"
               >
                 {imagePath && (
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-48 w-full flex-shrink-0">
                     <Image
                       src={imagePath}
                       alt={`${location.name}, ${PRIMARY_STATE_ABBR}`}
@@ -107,33 +107,35 @@ export function LocationSearchGrid({
                     />
                   </div>
                 )}
-                <div className="flex flex-col flex-1 p-6 space-y-3">
-                  <h3 className="text-lg font-semibold text-heading">
-                    {location.name}
-                  </h3>
-                  <p className="text-sm text-ink/80">{location.description}</p>
-                  <ul className="space-y-2 text-xs text-ink/70">
-                    {location.highlights.map((highlight) => (
-                      <li key={highlight} className="flex gap-2">
-                        <span aria-hidden="true" className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="flex flex-wrap items-center gap-3 mt-auto pt-4">
-                  <Link
-                    href={`${LOCATIONS_PATH}/${location.slug}`}
-                    className="inline-flex items-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-fg transition hover:bg-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  >
-                    View location
-                  </Link>
-                  <Link
-                    href={`${CONTACT_PATH}?projectType=${encodeURIComponent(location.name)}`}
-                    className="inline-flex items-center rounded-full border border-outline/30 px-4 py-2 text-sm font-medium text-ink transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  >
-                    Prefill contact
-                  </Link>
+                <div className="flex flex-col flex-1 p-6">
+                  <div className="flex flex-col flex-1 space-y-3">
+                    <h3 className="text-lg font-semibold text-heading">
+                      {location.name}
+                    </h3>
+                    <p className="text-sm text-ink/80">{location.description}</p>
+                    <ul className="space-y-2 text-xs text-ink/70">
+                      {location.highlights.map((highlight) => (
+                        <li key={highlight} className="flex gap-2">
+                          <span aria-hidden="true" className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3 pt-6 mt-6 border-t border-outline/10">
+                    <Link
+                      href={`${LOCATIONS_PATH}/${location.slug}`}
+                      className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-fg transition hover:bg-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      View location
+                    </Link>
+                    <Link
+                      href={`${CONTACT_PATH}?projectType=${encodeURIComponent(location.name)}`}
+                      className="inline-flex items-center justify-center rounded-full border border-outline/30 px-5 py-2 text-sm font-medium text-ink transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      Prefill contact
+                    </Link>
+                  </div>
                 </div>
               </article>
             );
