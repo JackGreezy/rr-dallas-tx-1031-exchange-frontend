@@ -182,10 +182,10 @@ const FAQ_ITEMS = [
 ];
 
 const trustBadges = [
-  { label: "CPA Aligned", icon: "CPA" },
-  { label: "Texas Counsel Support", icon: "Attorney" },
-  { label: "Qualified Intermediary Network", icon: "QI" },
-  { label: "Texas Market Insight", icon: "Texas" },
+  { label: "Nationwide Property Search", icon: "Search" },
+  { label: "All 50 States Coverage", icon: "Map" },
+  { label: "45-Day Identification Support", icon: "Clock" },
+  { label: "Property Matching Network", icon: "Network" },
 ];
 
 const organizationJsonLd = {
@@ -318,64 +318,39 @@ export default function Home({ searchParams }: HomeProps) {
       <link rel="canonical" href={SITE_URL} />
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-24 px-4 pb-24 pt-12 sm:px-8 lg:px-12">
         <section
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#D9A441]/20 via-[#FAFAFA] to-[#153243]/35 p-10 shadow-[0_32px_80px_rgba(21,50,67,0.15)] sm:p-14"
+          className="relative overflow-hidden rounded-3xl p-10 shadow-[0_32px_80px_rgba(21,50,67,0.15)] sm:p-14"
           aria-labelledby="hero-heading"
         >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(217,164,65,0.25),transparent_55%),radial-gradient(circle_at_bottom_left,rgba(21,50,67,0.3),transparent_60%)]" />
-          <div className="pointer-events-none absolute inset-0 opacity-15">
-            <svg
-              role="presentation"
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/1031-exchange-dallas-tx.webp"
+              alt=""
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
               aria-hidden="true"
-              width="100%"
-              height="100%"
-              viewBox="0 0 800 600"
-              preserveAspectRatio="none"
-              className="h-full w-full"
-            >
-              <defs>
-                <pattern
-                  id="grid-pattern"
-                  x="0"
-                  y="0"
-                  width="40"
-                  height="40"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path
-                    d="M40 0H0V40"
-                    fill="none"
-                    stroke="#153243"
-                    strokeWidth="0.5"
-                    strokeOpacity="0.4"
-                  />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid-pattern)" />
-              <path
-                d="M50 520 Q220 360 410 370 T760 270"
-                fill="none"
-                stroke="#D9A441"
-                strokeWidth="1.6"
-                strokeOpacity="0.35"
-              />
-            </svg>
+            />
+            {/* Overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#153243]/70 via-[#153243]/50 to-[#D9A441]/30" />
           </div>
-          <div className="relative z-10 flex flex-col gap-8 text-left text-[#1E1E1E] lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+          <div className="relative z-10 flex flex-col gap-8 text-left text-white lg:flex-row lg:items-center lg:justify-between lg:gap-12">
             <MotionDiv className="max-w-2xl space-y-6" delay={0.1}>
               <p
-                className={`${inter.className} text-sm uppercase tracking-[0.28em] text-[#153243]`}
+                className={`${inter.className} text-sm uppercase tracking-[0.28em] text-white/90`}
               >
                 {COMPANY_NAME}
               </p>
               <h1
                 id="hero-heading"
-                className={`${ibmPlexSerif.className} text-4xl leading-tight text-[#153243] sm:text-5xl`}
+                className={`${ibmPlexSerif.className} text-4xl leading-tight text-white sm:text-5xl`}
               >
                 Dallas 1031 Exchange Specialists
               </h1>
-              <p className="text-lg leading-relaxed text-[#1E1E1E]/90 sm:text-xl">
-                Helping Texas investors defer capital gains tax through
-                compliant 1031 exchanges.
+              <p className="text-lg leading-relaxed text-white/95 sm:text-xl">
+                We help Dallas investors identify replacement properties across all 50 states. 
+                Nationwide property sourcing with expert coordination to meet your 1031 exchange deadlines.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <a
@@ -392,7 +367,7 @@ export default function Home({ searchParams }: HomeProps) {
                 </Link>
               </div>
               <p
-                className={`${inter.className} text-sm uppercase tracking-[0.24em] text-[#1E1E1E]/75`}
+                className={`${inter.className} text-sm uppercase tracking-[0.24em] text-white/85`}
               >
                 45 Day identification. 180 Day closing. Stay compliant and on
                 schedule.

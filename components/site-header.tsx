@@ -243,7 +243,7 @@ export function SiteHeader() {
           </button>
           <a
             href={createPhoneHref(COMPANY_PHONE)}
-            className="inline-flex whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-fg transition-colors hover:bg-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="hidden whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-fg transition-colors hover:bg-[#B68531] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:inline-flex"
           >
             Call {COMPANY_PHONE}
           </a>
