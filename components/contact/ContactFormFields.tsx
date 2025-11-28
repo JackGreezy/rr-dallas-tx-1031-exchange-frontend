@@ -83,6 +83,9 @@ type FormData = {
   email: string;
   phone: string;
   projectType: string;
+  property: string;
+  estimatedCloseDate: string;
+  city: string;
   timeline: string;
   details: string;
 };
@@ -104,6 +107,9 @@ function ContactFormFieldsContent({ onSuccess, showHeading = false, className = 
     email: '',
     phone: '',
     projectType: '',
+    property: '',
+    estimatedCloseDate: '',
+    city: '',
     timeline: '',
     details: ''
   });
@@ -200,8 +206,7 @@ function ContactFormFieldsContent({ onSuccess, showHeading = false, className = 
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Valid email required';
     if (!formData.phone.trim()) newErrors.phone = 'Phone is required';
     if (!formData.projectType) newErrors.projectType = 'Project type is required';
-    if (!formData.timeline.trim()) newErrors.timeline = 'Timeline is required';
-    if (!formData.details.trim()) newErrors.details = 'Please provide details about your project';
+    // property, estimatedCloseDate, city, timeline, and details are all optional
 
     return newErrors;
   };
@@ -272,6 +277,9 @@ function ContactFormFieldsContent({ onSuccess, showHeading = false, className = 
           email: formData.email,
           phone: phoneDigits,
           projectType: formData.projectType,
+          property: formData.property,
+          estimatedCloseDate: formData.estimatedCloseDate,
+          city: formData.city,
           timeline: formData.timeline,
           details: formData.details,
           'cf-turnstile-response': turnstileToken,
@@ -286,6 +294,9 @@ function ContactFormFieldsContent({ onSuccess, showHeading = false, className = 
           email: '',
           phone: '',
           projectType: '',
+          property: '',
+          estimatedCloseDate: '',
+          city: '',
           timeline: '',
           details: ''
         });
@@ -421,36 +432,74 @@ function ContactFormFieldsContent({ onSuccess, showHeading = false, className = 
           {errors.projectType && <p className="text-red-600 text-sm mt-1">{errors.projectType}</p>}
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label htmlFor="property" className="block text-sm font-medium text-heading mb-2">
+              Property Being Sold
+            </label>
+            <input
+              type="text"
+              id="property"
+              value={formData.property}
+              onChange={(e) => handleInputChange('property', e.target.value)}
+              placeholder="Include property type, location, and estimated value (optional)"
+              className="w-full px-4 py-3 bg-white border border-outline/30 rounded-2xl text-heading placeholder:text-ink/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+            />
+          </div>
+          <div>
+            <label htmlFor="estimatedCloseDate" className="block text-sm font-medium text-heading mb-2">
+              Estimated Close Date
+            </label>
+            <input
+              type="date"
+              id="estimatedCloseDate"
+              value={formData.estimatedCloseDate}
+              onChange={(e) => handleInputChange('estimatedCloseDate', e.target.value)}
+              className="w-full px-4 py-3 bg-white border border-outline/30 rounded-2xl text-heading placeholder:text-ink/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="city" className="block text-sm font-medium text-heading mb-2">
+            City
+          </label>
+          <input
+            type="text"
+            id="city"
+            value={formData.city}
+            onChange={(e) => handleInputChange('city', e.target.value)}
+            placeholder="Primary metro or submarket (optional)"
+            className="w-full px-4 py-3 bg-white border border-outline/30 rounded-2xl text-heading placeholder:text-ink/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+          />
+        </div>
+
         <div>
           <label htmlFor="timeline" className="block text-sm font-medium text-heading mb-2">
-            Timeline *
+            Timeline
           </label>
           <input
             type="text"
             id="timeline"
             value={formData.timeline}
             onChange={(e) => handleInputChange('timeline', e.target.value)}
-            placeholder="e.g., 45 days, 3 months, flexible"
+            placeholder="e.g., 45 days, 3 months, flexible (optional)"
             className="w-full px-4 py-3 bg-white border border-outline/30 rounded-2xl text-heading placeholder:text-ink/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-            required
           />
-          {errors.timeline && <p className="text-red-600 text-sm mt-1">{errors.timeline}</p>}
         </div>
 
         <div>
           <label htmlFor="details" className="block text-sm font-medium text-heading mb-2">
-            Project Details *
+            Message
           </label>
           <textarea
             id="details"
             value={formData.details}
             onChange={(e) => handleInputChange('details', e.target.value)}
             rows={6}
-            placeholder="Tell us about your current property, desired replacement property types, budget, and any specific requirements..."
+            placeholder="Outline goals, replacement preferences, or coordination needs (optional)"
             className="w-full px-4 py-3 bg-white border border-outline/30 rounded-2xl text-heading placeholder:text-ink/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary resize-vertical"
-            required
           />
-          {errors.details && <p className="text-red-600 text-sm mt-1">{errors.details}</p>}
         </div>
 
         {submitError && (
